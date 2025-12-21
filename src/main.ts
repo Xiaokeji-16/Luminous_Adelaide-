@@ -5,9 +5,11 @@ import { ResultScene } from "./scenes/ResultScene";
 
 new Phaser.Game({
   type: Phaser.AUTO,
-  width: 900,
-  height: 600,
   parent: "app",
   backgroundColor: "#111827",
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
   scene: [PreloadScene, GameScene, ResultScene],
 });

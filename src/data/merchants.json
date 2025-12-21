@@ -1,0 +1,12 @@
+[
+  { "id": "m1", "name": "Adelaide Botanic Garden", "worldX": 200, "worldY": 180, "type": "cafe", "unlockRule": "default", "state": "available" },
+  { "id": "m2", "name": "Glenelg Beach", "worldX": 420, "worldY": 220, "type": "food", "unlockRule": "default", "state": "locked" },
+  { "id": "m3", "name": "Adelaide Central Market", "worldX": 640, "worldY": 260, "type": "shop", "unlockRule": "default", "state": "locked" },
+  { "id": "m4", "name": "Adelaide Zoo", "worldX": 320, "worldY": 360, "type": "food", "unlockRule": "default", "state": "available" },
+  { "id": "m5", "name": "National Wine Centre of Australia", "worldX": 520, "worldY": 420, "type": "poi", "unlockRule": "default", "state": "locked" },
+  { "id": "m6", "name": "Adelaide Oval", "worldX": 740, "worldY": 160, "type": "cafe", "unlockRule": "default", "state": "locked" },
+  { "id": "m7", "name": "South Australian Museum", "worldX": 160, "worldY": 460, "type": "game", "unlockRule": "default", "state": "available" },
+  { "id": "m8", "name": "Cleland Wildlife Park", "worldX": 860, "worldY": 320, "type": "poi", "unlockRule": "default", "state": "locked" },
+  { "id": "m9", "name": "Glenelg Pier", "worldX": 980, "worldY": 380, "type": "food", "unlockRule": "default", "state": "locked" },
+  { "id": "m10", "name": "Henley Beach", "worldX": 1100, "worldY": 240, "type": "poi", "unlockRule": "default", "state": "locked" }
+]

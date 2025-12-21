@@ -1,20 +1,67 @@
 import Phaser from "phaser";
+import { loadState, saveState, clearState } from "../state/storage";
+import { createGameUI } from "../ui/gameUI";
+import { createMerchantsWorld } from "../world/merchantsWorld";
 
 export class GameScene extends Phaser.Scene {
   constructor() {
     super("GameScene");
   }
 
-  create(data: any) {
-    this.add.text(40, 40, "Game Scene", { color: "#ffffff", fontSize: "32px" });
-    this.add.text(40, 90, "Press R → Result", { color: "#9ca3af", fontSize: "20px" });
+  create() {
+    const save = loadState();
 
-    if (data?.from) {
-      this.add.text(40, 130, `Entered from: ${data.from}`, { color: "#9ca3af" });
-    }
+    // UI 模块
+    const ui = createGameUI(this, save);
 
-    this.input.keyboard?.once("keydown-R", () => {
-      this.scene.start("ResultScene", { score: 123 });
+    // World 模块
+    const world = createMerchantsWorld(this, save);
+
+    // 双 Camera（彻底隔离 UI & World）
+    const worldCam = this.cameras.main;
+    worldCam.setViewport(0, ui.uiHeight, this.scale.width, this.scale.height - ui.uiHeight);
+
+    const uiCam = this.cameras.add(0, 0, this.scale.width, ui.uiHeight);
+    uiCam.ignore(world.worldObjects);
+    worldCam.ignore(ui.uiObjects);
+
+    const placeCameras = () => {
+      ui.placeUI();
+      uiCam.setViewport(0, 0, this.scale.width, ui.uiHeight);
+      worldCam.setViewport(0, ui.uiHeight, this.scale.width, this.scale.height - ui.uiHeight);
+    };
+    this.scale.on("resize", placeCameras);
+
+    // 按键逻辑
+    this.input.keyboard?.on("keydown-V", () => {
+      const m1 = save.merchants["m1"];
+      if (!m1) return;
+      m1.visits += 1;
+      saveState(save);
+      ui.refreshDebug();
+    });
+
+    this.input.keyboard?.on("keydown-L", () => {
+      const m1 = save.merchants["m1"];
+      if (!m1) return;
+
+      m1.state = m1.state === "lit" ? "available" : "lit";
+      if (m1.state === "lit") m1.lastLitAt = Date.now();
+
+      saveState(save);
+      const dot = world.dots["m1"];
+      if (dot) world.applyStateColor(dot, m1.state);
+      ui.refreshDebug();
+    });
+
+    this.input.keyboard?.on("keydown-X", () => {
+      clearState();
+      window.location.reload();
+    });
+
+    // 清理监听
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.scale.off("resize", placeCameras);
     });
   }
 }
