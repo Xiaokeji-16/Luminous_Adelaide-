@@ -6,16 +6,27 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    this.add.text(40, 40, "Loading...", { color: "#ffffff", fontSize: "28px" });
+    this.add.text(40, 40, "Loading...", {
+      color: "#ffffff",
+      fontSize: "28px",
+    });
 
-    // 先不加载任何图片也行，给你一个“有 preload”的结构
-    // 后面 Week2/Week3 会在这里 load 地图 tiles / 图标等
+    // 如果你还想保留整张底图（可选）
+    this.load.image("map_base", "assets/map_base_4k.png");
+
+    // Tiles
+    const COLS = 28;
+    const ROWS = 20;
+
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        this.load.image(`tile_${x}_${y}`, `assets/tiles/${x}_${y}.png`);
+      }
+    }
   }
 
   create() {
-    // 模拟加载完成
-    this.time.delayedCall(800, () => {
-      this.scene.start("GameScene", { from: "PreloadScene" });
-    });
+    // 加载完成后切到 GameScene
+    this.scene.start("GameScene", { from: "PreloadScene" });
   }
 }
