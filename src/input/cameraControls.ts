@@ -10,7 +10,7 @@ export function enableCameraControls(
   let lastY = 0;
 
   scene.input.on("pointerdown", (p: Phaser.Input.Pointer) => {
-    if (p.y < uiHeight) return; // 点在 UI 区就不拖
+    if (p.y < uiHeight) return;
     dragging = true;
     lastX = p.x;
     lastY = p.y;
@@ -34,8 +34,9 @@ export function enableCameraControls(
   });
 
   scene.input.on("wheel", (pointer: Phaser.Input.Pointer, _go: any, _dx: number, dy: number) => {
-    if (pointer.y < uiHeight) return; // UI 区不缩放
-    const nextZoom = Phaser.Math.Clamp(cam.zoom - dy * 0.001, 0.35, 2.5);
+    if (pointer.y < uiHeight) return;
+
+    const nextZoom = Phaser.Math.Clamp(cam.zoom - dy * 0.001, 0.08, 2.5);
     cam.setZoom(nextZoom);
   });
 }

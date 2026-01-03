@@ -12,8 +12,7 @@ export function applyWorldBounds(scene: Phaser.Scene, params: ApplyWorldBoundsPa
 
   cam.setBounds(0, 0, width, height);
 
-  // 如果你后面要用物理（目前可有可无）
-  // 如果你没启用 physics，这行不会报错（只是不执行）
+  // 可选：如果启用 physics
   // @ts-ignore
   scene.physics?.world?.setBounds?.(0, 0, width, height);
 

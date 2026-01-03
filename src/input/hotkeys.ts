@@ -4,10 +4,8 @@ import type { MerchantState } from "../types/merchant";
 
 type HotkeysDeps = {
   scene: Phaser.Scene;
-  save: any; // 先不强卡类型，后面再升级成 SaveState
-  ui: {
-    refreshDebug: () => void;
-  };
+  save: any;
+  ui: { refreshDebug: () => void };
   world: {
     dots: Record<string, Phaser.GameObjects.Arc>;
     applyStateColor: (dot: Phaser.GameObjects.Arc, state: MerchantState) => void;
@@ -15,7 +13,6 @@ type HotkeysDeps = {
 };
 
 export function registerHotkeys({ scene, save, ui, world }: HotkeysDeps) {
-  // V: visits++
   scene.input.keyboard?.on("keydown-V", () => {
     const m1 = save.merchants["m1"];
     if (!m1) return;
@@ -25,7 +22,6 @@ export function registerHotkeys({ scene, save, ui, world }: HotkeysDeps) {
     ui.refreshDebug();
   });
 
-  // L: toggle lit/available
   scene.input.keyboard?.on("keydown-L", () => {
     const m1 = save.merchants["m1"];
     if (!m1) return;
@@ -41,13 +37,11 @@ export function registerHotkeys({ scene, save, ui, world }: HotkeysDeps) {
     ui.refreshDebug();
   });
 
-  // X: clear localStorage and reload
   scene.input.keyboard?.on("keydown-X", () => {
     clearState();
     window.location.reload();
   });
 
-  // 清理监听（保险）
   scene.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
     scene.input.keyboard?.off("keydown-V");
     scene.input.keyboard?.off("keydown-L");
